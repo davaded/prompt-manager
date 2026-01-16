@@ -1,0 +1,171 @@
+{
+  "version": "1.0.0",
+  "exported_at": 1705315200,
+  "prompts": [
+    {
+      "id": "example-1",
+      "title": "代码审查助手",
+      "content": "请作为一个资深的{{language}}开发者，审查以下代码：\n\n```{{language}}\n{{clipboard}}\n```\n\n请从以下几个方面进行评审：\n1. 代码质量和可读性\n2. 性能优化建议\n3. 潜在的 bug 或安全问题\n4. 最佳实践建议\n\n审查态度：{{tone|严格,友好,建设性}}",
+      "tags": ["编程", "代码审查", "开发"],
+      "variables": [
+        {
+          "key": "language",
+          "type": "select",
+          "options": ["JavaScript", "TypeScript", "Python", "Rust", "Go"],
+          "default": "TypeScript"
+        },
+        {
+          "key": "clipboard",
+          "type": "system_clipboard"
+        },
+        {
+          "key": "tone",
+          "type": "select",
+          "options": ["严格", "友好", "建设性"],
+          "default": "建设性"
+        }
+      ],
+      "meta": {
+        "created_at": 1705315200,
+        "updated_at": 1705315200,
+        "usage_count": 0
+      }
+    },
+    {
+      "id": "example-2",
+      "title": "邮件撰写助手",
+      "content": "帮我撰写一封{{email_type}}邮件：\n\n收件人：{{recipient}}\n主题：{{subject}}\n\n语气：{{tone|正式,友好,简洁}}\n语言：{{language|中文,英文}}\n\n内容要点：\n{{clipboard}}\n\n请根据以上信息撰写一封专业且得体的邮件。",
+      "tags": ["办公", "邮件", "写作"],
+      "variables": [
+        {
+          "key": "email_type",
+          "type": "select",
+          "options": ["商务", "求职", "感谢信", "邀请", "通知"],
+          "default": "商务"
+        },
+        {
+          "key": "recipient",
+          "type": "text"
+        },
+        {
+          "key": "subject",
+          "type": "text"
+        },
+        {
+          "key": "tone",
+          "type": "select",
+          "options": ["正式", "友好", "简洁"],
+          "default": "正式"
+        },
+        {
+          "key": "language",
+          "type": "select",
+          "options": ["中文", "英文"],
+          "default": "中文"
+        },
+        {
+          "key": "clipboard",
+          "type": "system_clipboard"
+        }
+      ],
+      "meta": {
+        "created_at": 1705315200,
+        "updated_at": 1705315200,
+        "usage_count": 0
+      }
+    },
+    {
+      "id": "example-3",
+      "title": "周报生成器",
+      "content": "# {{date}} 周报\n\n## 本周完成工作\n{{clipboard}}\n\n## 下周计划\n- 待填写\n\n## 遇到的问题\n- 待填写\n\n## 需要的支持\n- 待填写\n\n语气风格：{{style|简洁专业,详细叙述,数据驱动}}",
+      "tags": ["办公", "周报", "总结"],
+      "variables": [
+        {
+          "key": "date",
+          "type": "system_date"
+        },
+        {
+          "key": "clipboard",
+          "type": "system_clipboard"
+        },
+        {
+          "key": "style",
+          "type": "select",
+          "options": ["简洁专业", "详细叙述", "数据驱动"],
+          "default": "简洁专业"
+        }
+      ],
+      "meta": {
+        "created_at": 1705315200,
+        "updated_at": 1705315200,
+        "usage_count": 0
+      }
+    },
+    {
+      "id": "example-4",
+      "title": "翻译助手",
+      "content": "请将以下内容从{{from_lang}}翻译成{{to_lang}}：\n\n{{clipboard}}\n\n翻译要求：\n- 保持原文的{{tone|正式,口语,技术}}语气\n- 确保术语准确\n- 语句通顺自然\n\n请提供翻译结果。",
+      "tags": ["翻译", "语言", "工具"],
+      "variables": [
+        {
+          "key": "from_lang",
+          "type": "select",
+          "options": ["中文", "英文", "日文", "韩文", "法文"],
+          "default": "中文"
+        },
+        {
+          "key": "to_lang",
+          "type": "select",
+          "options": ["英文", "中文", "日文", "韩文", "法文"],
+          "default": "英文"
+        },
+        {
+          "key": "tone",
+          "type": "select",
+          "options": ["正式", "口语", "技术"],
+          "default": "正式"
+        },
+        {
+          "key": "clipboard",
+          "type": "system_clipboard"
+        }
+      ],
+      "meta": {
+        "created_at": 1705315200,
+        "updated_at": 1705315200,
+        "usage_count": 0
+      }
+    },
+    {
+      "id": "example-5",
+      "title": "文章摘要生成",
+      "content": "请为以下文章生成一个{{length|简短,中等,详细}}的摘要：\n\n{{clipboard}}\n\n摘要要求：\n- 提取关键要点\n- 保持客观中立\n- 结构清晰\n- 字数控制在{{length|100,300,500}}字以内\n\n时间：{{date}} {{time}}",
+      "tags": ["写作", "摘要", "阅读"],
+      "variables": [
+        {
+          "key": "length",
+          "type": "select",
+          "options": ["简短", "中等", "详细"],
+          "default": "中等"
+        },
+        {
+          "key": "clipboard",
+          "type": "system_clipboard"
+        },
+        {
+          "key": "date",
+          "type": "system_date"
+        },
+        {
+          "key": "time",
+          "type": "system_time"
+        }
+      ],
+      "meta": {
+        "created_at": 1705315200,
+        "updated_at": 1705315200,
+        "usage_count": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(test:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm tauri dev:*)",
+      "Bash(rustc:*)",
+      "Bash(cargo:*)",
+      "Bash(pnpm run build:*)",
+      "Bash(link.exe:*)",
+      "Bash(where:*)",
+      "Bash($env:PATH = \"C:\\\\Program Files\\\\Microsoft Visual Studio\\\\2022\\\\BuildTools\\\\VC\\\\Tools\\\\MSVC\\\\*\\\\bin\\\\Hostx64\\\\x64;$env:PATH\")",
+      "Bash(where.exe:*)",
+      "Bash(Select-Object -First 1)",
+      "Bash(cmd.exe /c \"D:\\\\dya\\\\code\\\\AI\\\\prompt\\\\dev.bat\")",
+      "Bash(pnpm dev)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(timeout:*)",
+      "Skill(frontend-design)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\n🎨 完成赛博朋克全息风格界面重构\n\n## 主要特性\n- ✨ 全局扫描线效果和数据粒子流\n- 🎯 赛博朋克配色方案（青色 + 品红色）\n- 🌟 全息窗口容器带四角装饰\n- 💫 所有组件重构为赛博朋克风格\n- 🔤 自定义字体：Orbitron + Share Tech Mono\n\n## 组件更新\n- HoloWindow: 数据粒子流、环境光晕、底部状态栏\n- PromptCard: 扫描线动画、左侧光条\n- NeonButton: 三种变体的霓虹按钮\n- SearchBar: 聚焦时的角落装饰\n- TagFilter: 发光标签效果\n- PromptEditor: 矩阵背景的预览区\n- App: 完整的赛博朋克主界面\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
+    ]
+  }
+}
