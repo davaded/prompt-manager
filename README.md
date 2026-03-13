@@ -102,8 +102,12 @@ pnpm tauri build
 
 ## 项目结构
 
+> 新增：`packages/core` 已作为核心领域层（变量解析/渲染/校验）抽离，供后续 CLI/Web 复用。
+
 ```
 prompt-manager/
+├── packages/
+│   └── core/                # 核心领域模块（无 UI 依赖）
 ├── src/                      # 前端源码
 │   ├── components/          # React 组件
 │   │   ├── PromptList.tsx   # Prompt 列表

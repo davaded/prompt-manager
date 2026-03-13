@@ -245,7 +245,7 @@ export default function PromptEditor() {
             <div className="absolute inset-0 opacity-5 pointer-events-none font-mono text-[8px] text-cyan-400 overflow-hidden leading-tight">
               {Array.from({ length: 50 }).map((_, i) => (
                 <div key={i}>
-                  {Array.from({ length: 100 }).map((_, j) =>
+                  {Array.from({ length: 100 }).map(() =>
                     Math.random() > 0.5 ? '1' : '0'
                   ).join('')}
                 </div>

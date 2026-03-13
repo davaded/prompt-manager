@@ -1,4 +1,11 @@
 import { readText } from '@tauri-apps/plugin-clipboard-manager'
+import {
+  autoDetectVariables as autoDetectCoreVariables,
+  extractVariableDefinition as extractCoreVariableDefinition,
+  parseVariables as parseCoreVariables,
+  renderPrompt,
+  type PromptSpec
+} from '../../packages/core/src'
 import type { PromptVariable } from '../store/promptStore'
 
 export interface ParsedVariable {
@@ -12,18 +19,7 @@ export interface ParsedVariable {
  * Extracts {{variable}} patterns
  */
 export function parseVariables(content: string): string[] {
-  const regex = /\{\{(\w+(?:\|[^}]+)?)\}\}/g
-  const matches = content.matchAll(regex)
-  const variables = new Set<string>()
-
-  for (const match of matches) {
-    const fullMatch = match[1]
-    // Handle {{variable|options}} format
-    const varName = fullMatch.split('|')[0]
-    variables.add(varName)
-  }
-
-  return Array.from(variables)
+  return parseCoreVariables(content)
 }
 
 /**
@@ -34,33 +30,18 @@ export async function replaceVariables(
   variableValues: Record<string, string>,
   variables: PromptVariable[]
 ): Promise<string> {
-  let result = content
+  let clipboardText = ''
 
-  // Process each variable
-  for (const variable of variables) {
-    const { key, type } = variable
-    let value = variableValues[key] || ''
-
-    // Handle system variables
-    if (type === 'system_clipboard') {
-      try {
-        value = await readText() || ''
-      } catch (error) {
-        console.error('Failed to read clipboard:', error)
-        value = ''
-      }
-    } else if (type === 'system_date') {
-      value = new Date().toLocaleDateString()
-    } else if (type === 'system_time') {
-      value = new Date().toLocaleTimeString()
+  if (variables.some((variable) => variable.type === 'system_clipboard')) {
+    try {
+      clipboardText = (await readText()) || ''
+    } catch (error) {
+      console.error('Failed to read clipboard:', error)
     }
-
-    // Replace all occurrences
-    const regex = new RegExp(`\\{\\{${key}(?:\\|[^}]+)?\\}\\}`, 'g')
-    result = result.replace(regex, value)
   }
 
-  return result
+  const spec: PromptSpec = { content, variables }
+  return renderPrompt(spec, variableValues, { clipboardText })
 }
 
 /**
@@ -73,62 +54,12 @@ export function extractVariableDefinition(varPattern: string): {
   options?: string[]
   default?: string
 } {
-  const parts = varPattern.split('|')
-  const key = parts[0]
-
-  if (parts.length === 1) {
-    return { key, type: 'text' }
-  }
-
-  // Handle {{variable|option1,option2,option3}}
-  const optionsStr = parts[1]
-  const options = optionsStr.split(',').map((opt) => opt.trim())
-
-  return {
-    key,
-    type: 'select',
-    options,
-    default: options[0]
-  }
+  return extractCoreVariableDefinition(varPattern)
 }
 
 /**
  * Auto-detect variables from content and create variable definitions
  */
 export function autoDetectVariables(content: string): PromptVariable[] {
-  const variables: PromptVariable[] = []
-
-  const regex = /\{\{(\w+(?:\|[^}]+)?)\}\}/g
-  const matches = content.matchAll(regex)
-
-  const processed = new Set<string>()
-
-  for (const match of matches) {
-    const fullMatch = match[1]
-    const varDef = extractVariableDefinition(fullMatch)
-
-    if (processed.has(varDef.key)) {
-      continue
-    }
-
-    processed.add(varDef.key)
-
-    // Detect system variables by name
-    if (varDef.key === 'clipboard') {
-      variables.push({ key: varDef.key, type: 'system_clipboard' })
-    } else if (varDef.key === 'date') {
-      variables.push({ key: varDef.key, type: 'system_date' })
-    } else if (varDef.key === 'time') {
-      variables.push({ key: varDef.key, type: 'system_time' })
-    } else {
-      variables.push({
-        key: varDef.key,
-        type: varDef.type as 'text' | 'select',
-        options: varDef.options,
-        default: varDef.default
-      })
-    }
-  }
-
-  return variables
+  return autoDetectCoreVariables(content)
 }
